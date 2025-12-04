@@ -1,0 +1,8 @@
+prefix=/home/ubuntu20/catkin_ws/install
+
+Name: cobot_simulation
+Description: Description of cobot_simulation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

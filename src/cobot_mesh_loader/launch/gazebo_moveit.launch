@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="paused" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+
+  <!-- ========== 1. GAZEBO ========== -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find cobot_mesh_loader)/worlds/cobot_world.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+
+  <!-- ========== 2. ROBOT DESCRIPTION ========== -->
+  <param name="robot_description" command="cat '$(find cobot_mesh_loader)/urdf/robot_urdf.urdf'"/>
+
+  <!-- Robot State Publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Spawn Robot in Gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model medrob -param /robot_description"/>
+        
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cobot_mesh_loader)/rviz/cobot_new.rviz" required="true" />
+
+  <!-- ========== 3. GAZEBO CONTROLLERS ========== -->
+  <rosparam file="$(find cobot_mesh_loader)/config/controller_config_V2.yaml" command="load"/>
+  <rosparam file="$(find cobot_mesh_loader)/config/ros_gazebo.yaml" command="load"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller arm_controller r2_arm_controller"/>
+
+  <!-- ========== 4. MOVEIT ========== -->
+  <include file="$(find moveit)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+   
+  </include>
+
+  <!-- ========== 5. RVIZ with MoveIt ========== -->
+  <include file="$(find moveit)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find moveit)/launch/moveit.rviz"/>
+  </include>
+
+</launch>
