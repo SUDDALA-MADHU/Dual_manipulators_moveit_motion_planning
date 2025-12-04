@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: cobot_mesh_loader
+    relative_path: urdf/robot_urdf.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/medrob.srdf
+  CONFIG:
+    author_name: madhu
+    author_email: m24irm007@iitj.ac.in
+    generated_timestamp: 1763978920
