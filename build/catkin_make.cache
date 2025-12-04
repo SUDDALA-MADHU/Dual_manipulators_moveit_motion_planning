@@ -1,2 +1,0 @@
-cobot_mesh_loader:gazebo_ros_link_attacher:moveit
--DCATKIN_DEVEL_PREFIX=/home/ubuntu20/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu20/catkin_ws/install -G Unix Makefiles

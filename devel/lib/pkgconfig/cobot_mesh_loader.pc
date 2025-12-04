@@ -1,8 +1,0 @@
-prefix=/home/ubuntu20/catkin_ws/devel
-
-Name: cobot_mesh_loader
-Description: Description of cobot_mesh_loader
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: roscpp rospy std_msgs gazebo_msgs roslib moveit_core moveit_ros_planning_interface moveit_visual_tools gazebo_ros_link_attacher trajectory_msgs geometry_msgs
